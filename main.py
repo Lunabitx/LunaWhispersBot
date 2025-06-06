@@ -1,12 +1,13 @@
-
+from telegram import Update
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 import os
-from telegram.ext import ApplicationBuilder, CommandHandler
 
-async def start(update, context):
+TOKEN = os.getenv("TELEGRAM_TOKEN")
+
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("LunaWhispersBot is alive and whispering!")
 
-app = ApplicationBuilder().token(os.getenv("TELEGRAM_TOKEN")).build()
-app.add_handler(CommandHandler("start", start))
-
 if __name__ == "__main__":
+    app = ApplicationBuilder().token(TOKEN).build()
+    app.add_handler(CommandHandler("start", start))
     app.run_polling()
